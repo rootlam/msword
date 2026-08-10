@@ -11,7 +11,12 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake -S src -B build -A x64 -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="/wd4013 /wd4091 /wd4101 /wd4201" -DCMAKE_CXX_FLAGS="/wd4013 /wd4091 /wd4101 /wd4201"
+          cmake -S src -B build -A x64 -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="/wd4013 /wd4091 /wd4101 /wd4201 /wd4716" -DCMAKE_CXX_FLAGS="/wd4013 /wd4091 /wd4101 /wd4201 /wd4716"
+
+      - name: Fix PowerShell Script Path for Custom Commands
+        run: |
+          if (!(Test-Path "src/cmake")) { New-Item -ItemType Directory -Path "src/cmake" }
+          Copy-Item -Path "cmake/*" -Destination "src/cmake/" -Recurse -Force
 
       - name: Build WORD1 Executable
         run: |
@@ -22,5 +27,7 @@ jobs:
         with:
           name: Word1-x64
           path: |
+            build/bin/Release/WORD1.exe
+            build/bin/WORD1.exe
+            build/Release/WORD1.exe
             build/**/*.exe
-            bin/**/*.exe
