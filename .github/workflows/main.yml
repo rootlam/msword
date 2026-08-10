@@ -11,14 +11,16 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake -S src -B out --preset x64-release -DCMAKE_C_FLAGS="/wd4013 /wd4091 /wd4101 /wd4201" -DCMAKE_CXX_FLAGS="/wd4013 /wd4091 /wd4101 /wd4201"
+          cmake -S src -B build -A x64 -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="/wd4013 /wd4091 /wd4101 /wd4201" -DCMAKE_CXX_FLAGS="/wd4013 /wd4091 /wd4101 /wd4201"
 
       - name: Build WORD1 Executable
         run: |
-          cmake --build out --config Release --target WORD1
+          cmake --build build --config Release --target WORD1
 
       - name: Upload Executable
         uses: actions/upload-artifact@v4
         with:
           name: Word1-x64
-          path: out/**/*.exe
+          path: |
+            build/**/*.exe
+            bin/**/*.exe
