@@ -9,14 +9,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v2
+
       - name: Configure CMake
         working-directory: src
         run: |
-          cmake --preset x64-release -DCMAKE_C_FLAGS="/wd4013 /wd4091 /wd4101" -DCMAKE_CXX_FLAGS="/wd4013 /wd4091 /wd4101"
+          cmake --preset x64-release -DCMAKE_C_FLAGS="/wd4013 /wd4091 /wd4101 /wd4201" -DCMAKE_CXX_FLAGS="/wd4013 /wd4091 /wd4101 /wd4201"
 
-      - name: Build WORD1 Executable
-        working-directory: src
-        run: cmake --build --preset x64-release --target WORD1
+      - name: Build WORD1 via MSBuild
+        run: |
+          msbuild out\WORD1.vcxproj /p:Configuration=Release /p:Platform=x64
 
       - name: Upload Executable
         uses: actions/upload-artifact@v4
@@ -24,5 +27,7 @@ jobs:
         with:
           name: Word1-x64
           path: |
-            **/WORD1.exe
-            **/*.dll
+            out/**/WORD1.exe
+            bin/WORD1.exe
+            **/*.exe
+            !**/CMake*/**
