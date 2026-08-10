@@ -9,16 +9,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Add MSBuild to PATH
-        uses: microsoft/setup-msbuild@v2
-
       - name: Configure CMake
         run: |
           cmake -S src -B out --preset x64-release -DCMAKE_C_FLAGS="/wd4013 /wd4091 /wd4101 /wd4201" -DCMAKE_CXX_FLAGS="/wd4013 /wd4091 /wd4101 /wd4201"
 
       - name: Build WORD1 Executable
         run: |
-          cmake --build out --config Release --target WORD1
+          cmake --build out --config Release --target WORD1 -j 1
 
       - name: Upload Executable
         uses: actions/upload-artifact@v4
