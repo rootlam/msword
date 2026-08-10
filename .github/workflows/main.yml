@@ -13,13 +13,12 @@ jobs:
         uses: microsoft/setup-msbuild@v2
 
       - name: Configure CMake
-        working-directory: src
         run: |
-          cmake --preset x64-release -DCMAKE_C_FLAGS="/wd4013 /wd4091 /wd4101 /wd4201" -DCMAKE_CXX_FLAGS="/wd4013 /wd4091 /wd4101 /wd4201"
+          cmake -S src -B out --preset x64-release -DCMAKE_C_FLAGS="/wd4013 /wd4091 /wd4101 /wd4201" -DCMAKE_CXX_FLAGS="/wd4013 /wd4091 /wd4101 /wd4201"
 
-      - name: Build WORD1 via MSBuild
+      - name: Build WORD1 Executable
         run: |
-          msbuild out\WORD1.vcxproj /p:Configuration=Release /p:Platform=x64
+          cmake --build out --config Release --target WORD1
 
       - name: Upload Executable
         uses: actions/upload-artifact@v4
@@ -27,7 +26,7 @@ jobs:
         with:
           name: Word1-x64
           path: |
-            out/**/WORD1.exe
+            out/bin/Release/WORD1.exe
+            out/bin/WORD1.exe
             bin/WORD1.exe
-            **/*.exe
-            !**/CMake*/**
+            **/WORD1.exe
