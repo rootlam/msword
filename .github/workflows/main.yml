@@ -11,7 +11,7 @@ jobs:
 
       - name: Fix Directory Hierarchy
         run: |
-          New-Item -ItemType Junction -Path "src/src" -Target "src"
+          New-Item -ItemType Junction -Path "$PWD/src/src" -Target "$PWD/src"
 
       - name: Configure CMake
         run: |
