@@ -1,0 +1,21 @@
+name: Build WORD1
+
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure CMake
+        run: cmake -B build -S src -D CMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Upload Executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: Word1-x64
+          path: bin/WORD1.exe
