@@ -13,9 +13,9 @@ jobs:
         working-directory: src
         run: cmake --preset x64-release
 
-      - name: Build
+      - name: Build WORD1 Executable
         working-directory: src
-        run: cmake --build --preset x64-release
+        run: cmake --build --preset x64-release --target WORD1
 
       - name: Upload Executable
         uses: actions/upload-artifact@v4
