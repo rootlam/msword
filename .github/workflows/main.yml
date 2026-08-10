@@ -15,10 +15,11 @@ jobs:
 
       - name: Build WORD1 Executable
         working-directory: src
-        run: cmake --build --preset x64-release --target WORD1
+        run: cmake --build --preset x64-release --target WORD1 --verbose
 
       - name: Upload Executable
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: Word1-x64
           path: |
