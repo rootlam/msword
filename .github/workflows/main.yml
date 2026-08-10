@@ -15,15 +15,10 @@ jobs:
 
       - name: Build WORD1 Executable
         run: |
-          cmake --build out --config Release --target WORD1 -j 1
+          cmake --build out --config Release --target WORD1
 
       - name: Upload Executable
         uses: actions/upload-artifact@v4
-        if: always()
         with:
           name: Word1-x64
-          path: |
-            out/bin/Release/WORD1.exe
-            out/bin/WORD1.exe
-            bin/WORD1.exe
-            **/WORD1.exe
+          path: out/**/*.exe
