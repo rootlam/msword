@@ -9,9 +9,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fix Directory Hierarchy
+      - name: Stage CMake Helper Scripts
         run: |
-          New-Item -ItemType Junction -Path "$PWD/src/src" -Target "$PWD/src"
+          New-Item -ItemType Directory -Force -Path "src/cmake"
+          Get-ChildItem -Path "src" -Recurse -Include "*.ps1","*.cmake" | Copy-Item -Destination "src/cmake/" -Force
 
       - name: Configure CMake
         run: |
